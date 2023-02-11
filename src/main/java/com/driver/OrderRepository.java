@@ -53,6 +53,8 @@ public class OrderRepository {
     }
 
     public DeliveryPartner getPartnerById(String partnerid){
+       Integer value = PartnerAndOrdersDB.get(PartnerDB.get(partnerid)).size();
+       PartnerDB.get(partnerid).setNumberOfOrders(value);
         return PartnerDB.get(partnerid);
     }
 
@@ -115,8 +117,11 @@ public class OrderRepository {
     }
 
     public void deletePartnerById(String partnerid){
-        PartnerAndOrdersDB.remove(PartnerDB.get(partnerid));
-        PartnerDB.remove(partnerid);
+        if(PartnerDB.containsKey(partnerid)){
+            PartnerAndOrdersDB.remove(PartnerDB.get(partnerid));
+            PartnerDB.remove(partnerid);
+        }
+
     }
 
 
