@@ -115,14 +115,19 @@ public class OrderRepository {
     }
 
     public void deletePartnerById(String partnerid){
-        PartnerAndOrdersDB.get(PartnerDB.get(partnerid)).clear();
+        PartnerAndOrdersDB.remove(PartnerDB.get(partnerid));
         PartnerDB.remove(partnerid);
     }
+
+
     public void deleteOrderById(String orderid){
         for(DeliveryPartner p : PartnerAndOrdersDB.keySet()){
             for(Order order : PartnerAndOrdersDB.get(p)){
                 if(Objects.equals(order.getId(), orderid)){
-                    PartnerAndOrdersDB.get(p).remove(OrderDB.get(orderid));
+                     List<Order> temp = PartnerAndOrdersDB.get(p);
+                     temp.remove(OrderDB.get(orderid));
+                     PartnerAndOrdersDB.put(p,temp);
+                     break;
                 }
             }
         }
