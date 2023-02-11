@@ -8,10 +8,17 @@ import java.util.*;
 
 @Repository
 public class OrderRepository {
-   HashMap<String,Order> OrderDB = new HashMap<>();
-   HashMap<String,DeliveryPartner> PartnerDB = new HashMap<>();
-   HashMap<DeliveryPartner, List<Order>> PartnerAndOrdersDB = new HashMap<>();
-   HashMap<String,Order> OrdersAssignedDB = new HashMap<>();
+   HashMap<String,Order> OrderDB;
+   HashMap<String,DeliveryPartner> PartnerDB;
+   HashMap<DeliveryPartner, List<Order>> PartnerAndOrdersDB;
+   HashMap<String,Order> OrdersAssignedDB;
+
+   public OrderRepository(){
+       this.OrderDB = new HashMap<>();
+       this.PartnerDB = new HashMap<>();
+       this.PartnerAndOrdersDB = new HashMap<>();
+       this.OrdersAssignedDB = new HashMap<>();
+   }
 
 
 
