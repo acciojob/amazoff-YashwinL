@@ -31,17 +31,20 @@ public class OrderRepository {
         PartnerDB.put(partnerID,deliveryPartner);
     }
     public void addOrderPartnerPair(String orderid,String partnerid){
-        if(PartnerAndOrdersDB.containsKey(PartnerDB.get(partnerid))){
-            List<Order> temp = PartnerAndOrdersDB.get(PartnerDB.get(partnerid));
-            temp.add(OrderDB.get(orderid));
-            PartnerAndOrdersDB.put(PartnerDB.get(partnerid),temp);
-            OrdersAssignedDB.put(orderid,OrderDB.get(orderid));
-        }else{
-            List<Order> orderList = new ArrayList<>();
-            orderList.add(OrderDB.get(orderid));
-            PartnerAndOrdersDB.put(PartnerDB.get(partnerid),orderList);
-            OrdersAssignedDB.put(orderid,OrderDB.get(orderid));
-        }
+       if(OrderDB.containsKey(orderid) && PartnerDB.containsKey(partnerid)){
+           if(PartnerAndOrdersDB.containsKey(PartnerDB.get(partnerid))){
+               List<Order> temp = PartnerAndOrdersDB.get(PartnerDB.get(partnerid));
+               temp.add(OrderDB.get(orderid));
+               PartnerAndOrdersDB.put(PartnerDB.get(partnerid),temp);
+               OrdersAssignedDB.put(orderid,OrderDB.get(orderid));
+           }else{
+               List<Order> orderList = new ArrayList<>();
+               orderList.add(OrderDB.get(orderid));
+               PartnerAndOrdersDB.put(PartnerDB.get(partnerid),orderList);
+               OrdersAssignedDB.put(orderid,OrderDB.get(orderid));
+           }
+       }
+
 
     }
 
@@ -54,7 +57,7 @@ public class OrderRepository {
     }
 
     public Integer getOrderCountByPartnerId(String partnerid){
-       Integer count =0;
+       int count =0;
        if(PartnerAndOrdersDB.containsKey(PartnerDB.get(partnerid))){
            count = PartnerAndOrdersDB.get(PartnerDB.get(partnerid)).size();
        }
@@ -118,7 +121,7 @@ public class OrderRepository {
     public void deleteOrderById(String orderid){
         for(DeliveryPartner p : PartnerAndOrdersDB.keySet()){
             for(Order order : PartnerAndOrdersDB.get(p)){
-                if(order.getId()==orderid){
+                if(Objects.equals(order.getId(), orderid)){
                     PartnerAndOrdersDB.get(p).remove(OrderDB.get(orderid));
                 }
             }
