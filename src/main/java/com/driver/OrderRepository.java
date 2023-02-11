@@ -117,10 +117,11 @@ public class OrderRepository {
     }
 
     public void deletePartnerById(String partnerid){
+            for(Order order : PartnerAndOrdersDB.get(PartnerDB.get(partnerid))){
+                OrdersAssignedDB.remove(order.getId());
+            }
             PartnerAndOrdersDB.get(PartnerDB.get(partnerid)).clear();
             PartnerDB.remove(partnerid);
-
-
     }
 
 
