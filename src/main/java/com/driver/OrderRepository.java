@@ -8,10 +8,10 @@ import java.util.*;
 
 @Repository
 public class OrderRepository {
-   HashMap<String,Order> OrderDB;
-   HashMap<String,DeliveryPartner> PartnerDB;
-   HashMap<DeliveryPartner, List<Order>> PartnerAndOrdersDB;
-   HashMap<String,Order> OrdersAssignedDB;
+   private HashMap<String,Order> OrderDB;
+   private HashMap<String,DeliveryPartner> PartnerDB;
+   private HashMap<DeliveryPartner, List<Order>> PartnerAndOrdersDB;
+   private HashMap<String,Order> OrdersAssignedDB;
 
    public OrderRepository(){
        this.OrderDB = new HashMap<>();
@@ -57,7 +57,7 @@ public class OrderRepository {
     }
 
     public Integer getOrderCountByPartnerId(String partnerid){
-       int count =0;
+       Integer count =0;
        if(PartnerAndOrdersDB.containsKey(PartnerDB.get(partnerid))){
            count = PartnerAndOrdersDB.get(PartnerDB.get(partnerid)).size();
        }
@@ -80,7 +80,7 @@ public class OrderRepository {
     }
 
     public Integer getCountOfUnassignedOrders(){
-        int ans=0;
+        Integer ans=0;
         for(String i : OrderDB.keySet()){
             if(!OrdersAssignedDB.containsKey(i)){
                 ans++;
@@ -90,9 +90,9 @@ public class OrderRepository {
     }
 
     public Integer getOrdersLeftAfterGivenTimeByPartnerId(String time,String partnerid){
-        int count=0;
+        Integer count=0;
         String[] t = time.split(":");
-        int timeInMinutes = (Integer.parseInt(t[0])*60) + Integer.parseInt(t[1]);
+        Integer timeInMinutes = (Integer.valueOf(t[0])*60) + Integer.valueOf(t[1]);
         for(Order order : PartnerAndOrdersDB.get(PartnerDB.get(partnerid))){
             if(order.getDeliveryTime()>timeInMinutes){
                 count++;

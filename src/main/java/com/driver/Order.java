@@ -13,7 +13,7 @@ public class Order {
         this.id = id;
         realtime = deliveryTime;
         String[] time = deliveryTime.split(":");
-        this.deliveryTime= (Integer.parseInt(time[0])*60) + Integer.parseInt(time[1]);
+        this.deliveryTime= (Integer.valueOf(time[0])*60) + Integer.valueOf(time[1]);
 
     }
 
